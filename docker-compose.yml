@@ -46,7 +46,7 @@ services:
       MYSQL_USER: laravel
       MYSQL_PASSWORD: secret
     volumes:
-      - gg:/var/lib/mysql
+      - dbdata:/var/lib/mysql
     networks:
       - ox_test
 
