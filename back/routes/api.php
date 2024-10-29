@@ -25,6 +25,15 @@ Route::prefix('v1')->group(function () {
         Route::get('/users', [User::class, 'all']);
 
 
+
+        // Route::apiResource('cliens', ClientController::class);
+
+        // Route::apiResource('orders', OrderController::class);
+
+
+        //php artisan make:controller PhotoController --api
+
+
         // Route::get('/clients', [ClientController::class, 'index']);
         // Route::get('/clients/{id}', [ClientController::class, 'show']);
         // Route::post('/clients', [ClientController::class, 'store']);
