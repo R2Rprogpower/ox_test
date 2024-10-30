@@ -12,7 +12,6 @@ class Order extends Model
 
     protected $fillable = [
         'client_id',
-        'status_id', // Foreign key for status
         'total_amount',
     ];
 
@@ -21,10 +20,10 @@ class Order extends Model
         return $this->belongsTo(Client::class);
     }
 
-    public function status()
+    public function statuses()
     {
-        return $this->belongsTo(Status::class);
+        return $this->belongsToMany(Status::class, 'order_status')
+                    ->withTimestamps();
     }
 
-    
 }

@@ -20,7 +20,6 @@ class OrderFactory extends Factory
     {
         return [
             'client_id' => Client::factory(),
-            'status_id' => Status::factory(), // Create a new status instance
             'product_name' => $this->faker->word,
             'amount' => $this->faker->randomFloat(2, 10, 100),
         ];

@@ -15,13 +15,11 @@ class OrderSeeder extends Seeder
     public function run(): void
     {
         $clients = Client::all();
-        $statuses = Status::all();
 
         // Create some orders
         foreach ($clients as $client) {
             Order::create([
                 'client_id' => $client->id, // Creating a new client
-                'status_id' => $statuses->random()->id, // Assign a random status
                 'product_name' => \Faker\Factory::create()->word, // Assign a product name using Faker
                 'total_amount' => rand(100, 1000), // Assign a random total amount
             ]);
