@@ -9,7 +9,10 @@ const UserList = () => {
   const [error, setError] = useState('');
   const dispatch = useDispatch();
   const state = store.getState(); // Get the current state
-  const token = state.auth.token; // Access the token
+  var token = state.auth.token; // Access the token
+  if (!token) {
+    token = localStorage.getItem('authToken'); 
+  }
   useEffect(() => {
     const fetchUsers = async () => {
       try {

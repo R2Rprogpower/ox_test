@@ -8,6 +8,7 @@ use App\Models\V1\User;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\Api\V1\RegisterUserRequest;
 use App\Http\Requests\Api\V1\LoginUserRequest;
+use Illuminate\Support\Carbon;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -36,11 +37,13 @@ class UserController extends Controller
         // Retrieve the credentials from the validated request
         $credentials = $request->only('email', 'password');
         $tokenName = $request->token_name;
+        $expiresAt = $expiresAt ?? Carbon::now()->addDay();
+
         // Attempt to authenticate the user
         if (Auth::attempt($credentials)) {
             // Authentication successful
             $user = Auth::user();
-            $token = $user->createToken($tokenName)->plainTextToken;
+            $token = $user->createToken(name: $tokenName, expiresAt:  $expiresAt   )->plainTextToken;
 
             return response()->json(['message' => 'Login successful!', 'token' => $token], 200);
         }

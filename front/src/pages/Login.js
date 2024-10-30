@@ -12,9 +12,14 @@ function Login() {
 
   const onSubmit = async (data) => {
     data.token_name = "v1";
+
     try {
       const response = await axios.post('http://localhost:8080/api/v1/login', data);
-      dispatch(setAuth({ user: response.data.user, token: response.data.token }));
+      const { user, token } = response.data;
+
+      localStorage.setItem('authToken', token);
+
+      dispatch(setAuth({ user: user, token: token }));
       navigate('/users'); // Redirect to the User List on successful login
 
     } catch (error) {
