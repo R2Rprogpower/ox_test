@@ -66,8 +66,11 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
 
- #
- UserController->register 
- UserController->login
+#TODO: 
+   IMPLEMENT FORM REQUEST VALIDATION 
+   IMPLEMENT PUT AND PATCH DISCTION FOR UPDATES
+   add unit tests for resources.
+   add pagination for resources
+   
 
- 
+

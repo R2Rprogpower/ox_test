@@ -68,3 +68,18 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+#TODO: 
+    Add header component
+    add redirects
+    Add styles for for, table, header
+    Create forms for creating orders, clients, statuses
+    Create forms for editing orders, clients, statuses
+    Add delete button
+    Refactor Auth
+    make form pages be components
+    make forms pop up on a button
+    request all orders of a client 
+    request all statuses of an order
+    request orders with the most recent status
