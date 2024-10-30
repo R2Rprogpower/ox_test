@@ -14,9 +14,10 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-
-    public function hello() {
-        echo 'Welcome to v1';
+ 
+    public function index()
+    {
+        return User::all();
     }
 
     public function register(RegisterUserRequest $request)

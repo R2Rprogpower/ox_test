@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\V1\ClientController;
+use App\Http\Controllers\Api\V1\OrderController;
+use App\Http\Controllers\Api\V1\StatusController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\V1\User;
@@ -22,17 +25,14 @@ Route::prefix('v1')->group(function () {
     Route::middleware('auth:sanctum')->group(function () {
 
 
-        Route::get('/users', [User::class, 'all']);
+        Route::get('/users', [UserController::class, 'index']);
+
+        Route::apiResource('cliens', ClientController::class);
+        Route::apiResource('statuses', StatusController::class);
+        Route::apiResource('orders', OrderController::class);
 
 
-
-        // Route::apiResource('cliens', ClientController::class);
-
-        // Route::apiResource('orders', OrderController::class);
-
-
-        //php artisan make:controller PhotoController --api
-
+  
 
         // Route::get('/clients', [ClientController::class, 'index']);
         // Route::get('/clients/{id}', [ClientController::class, 'show']);
