@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('client_id')->constrained()->onDelete('cascade'); // Foreign key for client
-            $table->foreignId('status_id')->constrained()->onDelete('cascade'); // Foreign key for status
+            $table->foreignId('status_id')->constrained('statuses')->onDelete('cascade'); // Foreign key for status
             $table->string('product_name');
             $table->decimal('total_amount', 10, 2); // Total amount of the order
             $table->timestamps();
@@ -26,6 +26,11 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('orders', function (Blueprint $table) {
+            $table->dropForeign(['client_id']);
+            $table->dropForeign(['status_id']);
+        });
         Schema::dropIfExists('orders');
+
     }
 };
