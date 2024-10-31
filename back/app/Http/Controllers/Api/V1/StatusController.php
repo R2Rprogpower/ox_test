@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api\V1;
 use App\Models\V1\Status;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\V1\StoreStatusRequest;
+use App\Http\Requests\Api\V1\UpdateStatusRequest;
 
 class StatusController extends Controller
 {
@@ -13,29 +15,21 @@ class StatusController extends Controller
         return Status::all(); // Get all statuses
     }
 
-    public function store(Request $request)
+    public function store(StoreStatusRequest $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|unique:statuses,name',
-        ]);
-
-        $status = Status::create($validated);
+        $status = Status::create($request->validated());
         return response()->json($status, 201);
     }
+    
 
     public function show(Status $status)
     {
         return $status; // Get a specific status
     }
 
-    public function update(Request $request, Status $status)
+    public function update(UpdateStatusRequest $request, Status $status)
     {
-        //@todo: validate put and patch.
-        $validated = $request->validate([
-            'name' => 'sometimes|string|unique:statuses,name,' . $status->id,
-        ]);
-
-        $status->update($validated);
+        $status->update($request->validated());
         return response()->json($status);
     }
 
