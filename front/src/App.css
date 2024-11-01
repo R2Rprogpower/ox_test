@@ -36,3 +36,67 @@
     transform: rotate(360deg);
   }
 }
+
+.filters {
+  margin-bottom: 20px;
+}
+
+.filters input {
+  margin-right: 10px;
+  padding: 5px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 3px 6px;
+  margin-right: 5px;
+  border-radius: 4px;
+  background-color: #e0e0e0; /* Default badge color */
+}
+
+.status-badge.cancelled {
+  background-color: #ffcccc; /* Color for cancelled status */
+}
+
+.status-badge.pending {
+  background-color: #fff3cd; /* Color for pending status */
+}
+
+.status-badge.processing {
+  background-color: #ffeeba; /* Color for processing status */
+}
+
+.status-badge.completed {
+  background-color: #d4edda; /* Color for completed status */
+}
+
+
+
+button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff; /* Bootstrap primary color */
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+}

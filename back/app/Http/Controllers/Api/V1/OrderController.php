@@ -12,9 +12,8 @@ class OrderController extends Controller
     public function index()
     {
         // Return all orders with associated client and status
-        return Order::with(['client', 'status'])->get();
+        return Order::with(['client', 'statuses'])->get();
     }
-
     public function store(StoreOrderRequest $request)
     {
         $order = Order::create($request->validated());

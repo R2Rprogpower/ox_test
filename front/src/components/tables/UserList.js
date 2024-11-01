@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import { logout } from '../store'; // Import logout action
-import { store } from '../store'; // Assuming your store is exported from here
+import { logout } from '../../store'; // Import logout action
+import { store } from '../../store'; // Assuming your store is exported from here
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
@@ -16,10 +16,7 @@ const UserList = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
- 
-
-
-        const response = await axios.get('http://localhost:8080/api/v1/users', {
+        const response = await axios.get('http://localhost:8080/api/v1/orders', {
           headers: {
             Authorization: `Bearer ${token}`, // Include the token in the headers
           },
