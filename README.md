@@ -5,11 +5,11 @@ docker-compose up -d
  
 docker-compose exec app bash
 ->
-php artisan migrage --seed
+php artisan migrate --seed
 migrate and seed the db
 
 go to 
-http://localhost:3000/auth/register abd register
+http://localhost:3000/auth/register and register
 go to
 http://localhost:3000/auth/login and login
 
