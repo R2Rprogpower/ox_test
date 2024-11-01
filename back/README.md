@@ -67,10 +67,11 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 
 #TODO: 
-   IMPLEMENT FORM REQUEST VALIDATION 
-   IMPLEMENT PUT AND PATCH DISCTION FOR UPDATES
+   IMPLEMENT FORM REQUEST VALIDATION +
+   IMPLEMENT PUT AND PATCH DISCTION FOR UPDATES +
+
    add unit tests for resources.
    add pagination for resources
-   
+   add ●	Unit-тести для основних CRUD-операцій та API.
 
 
