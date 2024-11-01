@@ -1,27 +1,19 @@
 ## Test OX App
 start docker 
-
+run in the project's root
 docker-compose up -d  
  
 docker-compose exec app bash
-
-
-
+->
+php artisan migrage --seed
 migrate and seed the db
 
-get access token
-POST /
-http://localhost:8080/api/tokens/create?token_name=api&email=test@example.com
+go to 
+http://localhost:3000/auth/register abd register
+go to
+http://localhost:3000/auth/login and login
 
-Read current user Users
-GET http://localhost:8080/api/user
-Auth Type: Bearer token 
-(it is the access token generated from the first request.)
-
-Get All Users
-
-GET http://localhost:8080/api/users
-Auth Type: Bearer token 
-(it is the access token generated from the first request.)
+Enjoy CRM functions.
 
 
+ 

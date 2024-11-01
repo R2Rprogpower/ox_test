@@ -12,24 +12,42 @@ class OrderController extends Controller
     public function index()
     {
         // Return all orders with associated client and status
-        return Order::with(['client', 'statuses'])->get();
+        return Order::with([
+            'client',
+            'statuses' => function ($query) {
+                $query->orderBy('id', 'desc'); // Order statuses by created_at descending
+            }
+        ])->get();    
     }
+
     public function store(StoreOrderRequest $request)
     {
         $order = Order::create($request->validated());
-        return response()->json($order, 201);
+ 
+        $order->statuses()->attach($request->status_id);
+    
+        return response()->json($order->load('statuses'), 201); // Return the order with statuses
     }
     
    
 
     public function show(Order $order)
     {
-        return $order->load(['client', 'status']);
-    }
+        return $order->load(['client', 'statuses' => function ($query) {
+            $query->orderBy('order_status.id', 'desc'); // Order statuses by created_at descending from the pivot table
+        }]);    }
 
     public function update(UpdateOrderRequest $request, Order $order)
     {
         $order->update($request->validated());
+        if ($request->status_id) {
+            $order->statuses()->attach($request->status_id);
+        }
+
+        $order->load(['statuses' => function ($query) {
+            $query->orderBy('order_status.id', 'desc'); // Order statuses by created_at descending from the pivot table
+        }]);
+  
         return response()->json($order);
     }
     public function destroy(Order $order)

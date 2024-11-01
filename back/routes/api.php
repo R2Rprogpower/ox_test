@@ -27,9 +27,9 @@ Route::prefix('v1')->group(function () {
 
         Route::get('/users', [UserController::class, 'index']);
 
-        Route::apiResource('cliens', ClientController::class);
+        Route::apiResource('clients', ClientController::class);
         Route::apiResource('statuses', StatusController::class);
-        Route::apiResource('orders', OrderController::class);
+        Route::apiResource('orders', controller: OrderController::class);
 
     });
 });

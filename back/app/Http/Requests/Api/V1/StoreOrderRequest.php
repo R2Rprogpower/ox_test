@@ -16,7 +16,7 @@ class StoreOrderRequest extends FormRequest
     {
         return [
             'client_id' => 'required|exists:clients,id', // Ensure client exists
-            'status_id' => 'required|exists:statuses,id', // Ensure status exists
+            'status_id' => 'sometimes|exists:statuses,id', // Ensure status exists
             'total_amount' => 'required|numeric|min:0', // Validate total amount
             'product_name' => 'required|string',
         ];

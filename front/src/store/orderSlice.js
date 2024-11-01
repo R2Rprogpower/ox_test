@@ -38,8 +38,9 @@ export const deleteOrder = createAsyncThunk(
           Authorization: `Bearer ${token}`, // Include the token in the headers
         },
       });
+      console.log('Response from API:', response);
 
-      return response.data; // Return the response data after successful deletion
+      return orderId; // Return the response data after successful deletion
     } catch (error) {
       // Handle errors
       if (error.response) {
@@ -55,9 +56,9 @@ export const deleteOrder = createAsyncThunk(
 
 export const updateOrder = createAsyncThunk(
   'order/updateOrder',
-  async ({ orderId, updatedData, token }, { rejectWithValue }) => {
+  async ({ orderId, formData, token }, { rejectWithValue }) => {
     try {
-      const response = await axios.put(`http://localhost:8080/api/v1/orders/${orderId}`, updatedData, {
+      const response = await axios.put(`http://localhost:8080/api/v1/orders/${orderId}`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -73,13 +74,13 @@ export const updateOrder = createAsyncThunk(
 
 
 // Async thunk for adding a new order
-export const addOrder = createAsyncThunk(
-  'order/addOrder',
-  async (newOrder, { rejectWithValue }) => {
+export const storeOrder = createAsyncThunk(
+  'order/storeOrder',
+  async ({formData, token}, { rejectWithValue }) => {
     try {
-      const response = await axios.post('http://localhost:8080/api/v1/orders', newOrder, {
+      const response = await axios.post('http://localhost:8080/api/v1/orders', formData, {
         headers: {
-          Authorization: `Bearer ${newOrder.token}`, // Include token if needed
+          Authorization: `Bearer ${token}`, // Include token if needed
         },
       });
       return response.data; // Return the added order data from the response
@@ -88,14 +89,37 @@ export const addOrder = createAsyncThunk(
     }
   }
 );
-
-
+export const fetchOrderById = createAsyncThunk(
+  'order/fetchOrderById',
+  async ({ orderId, token }, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`http://localhost:8080/api/v1/orders/${orderId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data; // Return the response data directly
+    } catch (error) {
+      // Handle errors
+      return handleFetchError(error, rejectWithValue);
+    }
+  }
+);
+const handleFetchError = (error, rejectWithValue) => {
+  if (error.response) {
+    return rejectWithValue(error.response.data);
+  } else if (error.request) {
+    return rejectWithValue({ message: 'No response from server' });
+  } else {
+    return rejectWithValue({ message: error.message });
+  }
+};
 
 export  const orderSlice = createSlice({
   name: 'order',
   initialState: { orders: [], status: 'idle', error: null },
   reducers: {
-    addOrder: (state, action) => {
+    storeOrder: (state, action) => {
       state.orders.push(action.payload); // Adds a new order to the state
     },
     updateOrder: (state, action) => {
@@ -105,9 +129,7 @@ export  const orderSlice = createSlice({
         state.orders[index] = { ...state.orders[index], ...updatedOrder }; // Updates the specific order
       }
     },
-    deleteOrder: (state, action) => {
-     
-    },
+  
   },
 
   extraReducers: (builder) => {
@@ -117,7 +139,7 @@ export  const orderSlice = createSlice({
       })
       .addCase(fetchOrders.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.orders = action.payload; 
+        state.orders = action.payload;
       })
       .addCase(fetchOrders.rejected, (state, action) => {
         state.status = 'failed';
@@ -127,6 +149,7 @@ export  const orderSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(updateOrder.fulfilled, (state, action) => {
+
         state.status = 'succeeded';
         
       })
@@ -138,24 +161,38 @@ export  const orderSlice = createSlice({
       })
       .addCase(deleteOrder.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        const orderId = action.payload;
-        state.orders = state.orders.filter(order => order.id !== orderId); // Removes the order from the state
+        const orderId = action.meta.arg.orderId; // Accessing orderId from action meta
+        state.orders = state.orders.filter(order => order.id !== orderId); // Remove the order from state
       })
       .addCase(deleteOrder.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload || { message: 'Failed to fetch orders' };
-      })    .addCase(addOrder.pending, (state) => {
+      })    .addCase(storeOrder.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(addOrder.fulfilled, (state, action) => {
+      .addCase(storeOrder.fulfilled, (state, action) => {
         state.status = 'succeeded';
+
       })
-      .addCase(addOrder.rejected, (state, action) => {
+      .addCase(storeOrder.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload;
+      })
+      .addCase(fetchOrderById.fulfilled, (state, action) => {
+        if (action.payload) {
+          const existingOrderIndex = state.orders.findIndex(order => order.id === action.payload.id);
+          
+          if (existingOrderIndex === -1) {
+              // If the order does not exist, push it to the orders array
+              state.orders.push(action.payload);
+          } else {
+              // Optionally update the existing order with new data if needed
+              state.orders[existingOrderIndex] = action.payload;
+          }
+        }
       });
   },
 });
 
-export default orderSlice.reducer;
-export const {} = orderSlice.actions;
+export const { reducer: orderReducer } = orderSlice;
+export default orderReducer;

@@ -1,8 +1,6 @@
 // src/pages/Dashboard.js
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import Popup from '../components/Popup';
-import OrderForm from '../components/forms/OrderForm';
 import OrderTable from '../components/tables/OrderTable'; // Adjust the path as necessary
 
 // import ClientForm from '../components/forms/ClientForm';
@@ -19,18 +17,6 @@ const Dashboard = () => {
     <div>
       <h1>Dashboard</h1>
       <OrderTable />
-      {/* Orders List */}
-      <section>
-        <h2>Orders</h2>
-        <button onClick={() => console.log('add order')}>Add Order</button>
-        {orders.map((order) => (
-          <div key={order.id}>{order.name}</div>
-        ))}
-      </section>
-      {/* Similar sections for clients and statuses */}
-      <Popup>
-        {/* Use the Popup component to render forms conditionally */}
-      </Popup>
     </div>
   );
 };
