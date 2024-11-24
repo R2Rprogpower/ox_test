@@ -13,7 +13,14 @@ class ClientController extends Controller
 {
     public function index()
     {
-        return Client::all();
+      
+
+        return Client::with([
+            'statuses' => function ($query) {
+                $query->orderBy('id', 'desc'); // Order statuses by created_at descending
+            }
+        ])->get();    
+
     }
 
     public function store(StoreClientRequest $request)

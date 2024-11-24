@@ -13,6 +13,10 @@ return [
     | a conventional file to locate the various service credentials.
     |
     */
+    'keepincrm' => [
+        'base_url' => env('KEEPINCRM_BASE_URL', 'https://api.keepincrm.com/v1'), // Replace with actual base URL
+        'api_token' => env('KEEPINCRM_API_TOKEN', 'XCgLEtgnXErqhhZWzfvEAJph'), // Add your API token
+    ],
 
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),

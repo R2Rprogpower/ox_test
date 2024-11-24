@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('order_status', function (Blueprint $table) {
+        Schema::create('statuses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('order_id')->constrained()->onDelete('cascade'); // Foreign key for order
-            $table->foreignId('status_id')->constrained('statuses')->onDelete('cascade'); // Foreign key for status
+            $table->string('name')->unique();
+            $table->string('color');
+            $table->string('kind');
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('order_status');
+        Schema::dropIfExists('statuses');
     }
 };

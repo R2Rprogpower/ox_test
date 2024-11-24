@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { loginUser } from '../../store/authSlice';
+import { loginUser, registerUser } from '../../store/authSlice';
 import { useNavigate } from 'react-router-dom';
 
 function Register() {
@@ -14,10 +14,9 @@ function Register() {
 
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post('http://localhost:8080/api/v1/register', data);
-      dispatch(loginUser(data)).then((result) => {
-        if (result.type === 'auth/loginUser/fulfilled') {
-          navigate('/dashboard');
+      dispatch(registerUser(data)).then((result) => {
+        if (result.type === 'auth/registerUser/fulfilled') {
+          navigate('/auth/login');
         }
       });    
     } catch (error) {

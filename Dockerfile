@@ -21,6 +21,12 @@ RUN pecl install xdebug \
 
 COPY ./xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 
+
+# COPY ./php.ini /usr/local/etc/php/
+RUN echo "max_execution_time=300" >> /usr/local/etc/php/php.ini
+
+
+
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 

@@ -9,16 +9,19 @@ class Status extends Model
 {
     /** @use HasFactory<\Database\Factories\StatusFactory> */
     use HasFactory;
-    
+
+    // Fillable fields to allow mass assignment
     protected $fillable = [
-        'name',
+        'name', 
+        'color', 
+        'kind',
     ];
 
-    public function orders()
+    public function clients()
     {
-        return $this->belongsToMany(Order::class, 'order_status')
-                    ->withTimestamps();
+        return $this->belongsToMany(Client::class, 'status_client')
+        ->withTimestamps()
+        ->withPivot('created_at'); // Ensure you are using withTimestamps
     }
-
 
 }
