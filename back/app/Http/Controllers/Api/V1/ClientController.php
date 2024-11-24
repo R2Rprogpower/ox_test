@@ -17,7 +17,7 @@ class ClientController extends Controller
 
         return Client::with([
             'statuses' => function ($query) {
-                $query->orderBy('id', 'desc'); // Order statuses by created_at descending
+                $query->orderBy('created_at', 'desc'); // Order statuses by created_at descending
             }
         ])->get();    
 
